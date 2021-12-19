@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:themoviedb/Theme/app_button_style.dart';
 import 'package:themoviedb/widgets/main_screen/main_screen_widget.dart';
 import 'package:themoviedb/widgets/registration_verification/reg_widget.dart';
@@ -210,6 +211,7 @@ class _FormWidget extends StatefulWidget {
 class _FormWidgetState extends State<_FormWidget> {
   final _loginTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+  bool _isObscure = true;
   bool isAuthError = false;
 
   void _auth() {
@@ -218,8 +220,8 @@ class _FormWidgetState extends State<_FormWidget> {
     if (login == "admin" && password == "admin") {
       isAuthError = false;
 
-      Navigator.of(context).push(
-          MaterialPageRoute<void>(builder: (context) => MainScreenWidget()));
+      Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (context) => const MainScreenWidget()));
     } else {
       isAuthError = true;
     }
@@ -277,6 +279,7 @@ class _FormWidgetState extends State<_FormWidget> {
                 ),
               ),
               TextField(
+                keyboardType: TextInputType.visiblePassword,
                 controller: _loginTextController,
                 decoration: textFieldDecoration,
               ),
@@ -291,9 +294,25 @@ class _FormWidgetState extends State<_FormWidget> {
                 ),
               ),
               TextField(
+              
+                onEditingComplete: () {
+                  print("onEdit");
+                },
+                onSubmitted: (String) {},
                 controller: _passwordTextController,
-                decoration: textFieldDecoration,
-                obscureText: true,
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    isDense: true,
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
+                        icon: const Icon(Icons.remove_red_eye))),
+                obscureText: _isObscure,
               ),
               const SizedBox(
                 width: double.infinity,

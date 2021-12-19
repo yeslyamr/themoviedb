@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb/widgets/auth/auth_widget.dart';
+import 'package:themoviedb/widgets/movie_list/movie_list_widget.dart';
 
 class MainScreenWidget extends StatefulWidget {
   const MainScreenWidget({Key? key}) : super(key: key);
@@ -9,13 +10,7 @@ class MainScreenWidget extends StatefulWidget {
 }
 
 class _MainScreenWidgetState extends State<MainScreenWidget> {
-  int _selectedPage = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text("home"),
-    Text("movies"),
-    Text("tv shows"),
-  ];
+  int _selectedPage = 1;
 
   void onSelectedPage(int index) {
     if (index == _selectedPage) return;
@@ -47,7 +42,14 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         ],
         title: const Text("TMDB"),
       ),
-      body: _widgetOptions[_selectedPage],
+      body: IndexedStack(
+        index: _selectedPage,
+        children: [
+          const Text("home"),
+          MovieListWidget(),
+          const Text("tv shows"),
+        ]
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPage,
         onTap: onSelectedPage,
