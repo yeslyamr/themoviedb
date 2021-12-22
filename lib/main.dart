@@ -3,6 +3,7 @@ import 'package:themoviedb/widgets/auth/auth_widget.dart';
 import 'package:themoviedb/widgets/main_screen/main_screen_widget.dart';
 import 'package:themoviedb/widgets/registration_verification/email_verification_widget.dart';
 import 'package:themoviedb/widgets/registration_verification/reg_widget.dart';
+import 'package:themoviedb/widgets/movie_details/movie_details_widget.dart';
 
 import 'Theme/app_colors.dart';
 
@@ -24,19 +25,25 @@ class MyApp extends StatelessWidget {
           backgroundColor: AppColors.mainDarkBlue,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: AppColors.mainDarkBlue,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.blueGrey
-        ),
+            backgroundColor: AppColors.mainDarkBlue,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.blueGrey),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => const MainScreenWidget(),
         '/auth': (context) => const AuthWidget(),
         '/reg': (context) => const RegistrationScreenWidget(),
-        '/mail_verification': (context) => const EmailVerificationScreenWidget(),
+        '/mail_verification': (context) =>
+            const EmailVerificationScreenWidget(),
+        '/movie_details': (context) {
+          final argument = ModalRoute.of(context)?.settings.arguments;
+          if (argument is int) {
+            return MovieDetailsWidget(movieId: argument);
+          }
+          return const MovieDetailsWidget(movieId: 1);
+        },
       },
-
     );
   }
 }

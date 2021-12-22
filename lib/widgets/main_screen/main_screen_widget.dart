@@ -42,14 +42,11 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         ],
         title: const Text("TMDB"),
       ),
-      body: IndexedStack(
-        index: _selectedPage,
-        children: [
-          const Text("home"),
-          MovieListWidget(),
-          const Text("tv shows"),
-        ]
-      ),
+      body: IndexedStack(index: _selectedPage, children: const [
+        Text("home"),
+        MovieListWidget(),
+        Text("tv shows"),
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPage,
         onTap: onSelectedPage,

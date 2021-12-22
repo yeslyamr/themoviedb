@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:themoviedb/Theme/app_button_style.dart';
 import 'package:themoviedb/widgets/main_screen/main_screen_widget.dart';
-import 'package:themoviedb/widgets/registration_verification/reg_widget.dart';
 
 class AuthWidget extends StatefulWidget {
   const AuthWidget({Key? key}) : super(key: key);
@@ -294,7 +291,6 @@ class _FormWidgetState extends State<_FormWidget> {
                 ),
               ),
               TextField(
-              
                 onEditingComplete: () {
                   print("onEdit");
                 },

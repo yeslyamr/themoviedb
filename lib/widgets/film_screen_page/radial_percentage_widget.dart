@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class RadialPercentWidget extends StatelessWidget {
-
   final Text child;
   final double percent;
   final Color fillColor;
@@ -23,7 +22,6 @@ class RadialPercentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -33,14 +31,11 @@ class RadialPercentWidget extends StatelessWidget {
               fillColor: fillColor,
               lineColor: lineColor,
               freeColor: freeColor,
-              lineWidth: lineWidth
-          ),
+              lineWidth: lineWidth),
         ),
-          Padding(
+        Padding(
           padding: const EdgeInsets.all(11.0),
-          child: Center(
-              child: child
-          ),
+          child: Center(child: child),
         ),
       ],
     );
@@ -76,13 +71,8 @@ class MyPainter extends CustomPainter {
     paint.strokeWidth = lineWidth;
     paint.strokeCap = StrokeCap.round;
     paint.color = freeColor;
-    canvas.drawArc(
-        arcRect,
-        -pi / 2 + 2*pi*percent,
-        2*pi*(1-percent),
-        false,
-        paint
-    );
+    canvas.drawArc(arcRect, -pi / 2 + 2 * pi * percent, 2 * pi * (1 - percent),
+        false, paint);
   }
 
   void drawFilledArc(Size size, Canvas canvas, Rect arcRect) {
@@ -91,25 +81,20 @@ class MyPainter extends CustomPainter {
     paint.strokeWidth = lineWidth;
     paint.strokeCap = StrokeCap.round;
     paint.color = lineColor;
-    canvas.drawArc(
-        arcRect,
-        -pi / 2,
-        2*pi*percent,
-        false,
-        paint);
+    canvas.drawArc(arcRect, -pi / 2, 2 * pi * percent, false, paint);
   }
 
   Rect calculateArcsRect(Size size) {
-    final linesMargin = size.width/20;
+    final linesMargin = size.width / 20;
     final offset = lineWidth / 2 + linesMargin;
     final arcRect = Offset(offset, offset) &
-    Size(size.width - offset * 2, size.height - offset * 2);
+        Size(size.width - offset * 2, size.height - offset * 2);
     return arcRect;
   }
 
   void drawBackground(Canvas canvas, Size size) {
     final paint = Paint();
-    paint.color = Colors.blueGrey;
+    paint.color = fillColor;
     paint.style = PaintingStyle.fill;
     canvas.drawOval(Offset.zero & size, paint);
   }
@@ -119,4 +104,3 @@ class MyPainter extends CustomPainter {
     return true;
   }
 }
-
