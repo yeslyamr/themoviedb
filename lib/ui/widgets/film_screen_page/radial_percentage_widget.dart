@@ -1,9 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class RadialPercentWidget extends StatelessWidget {
-  final Text child;
+  final String child;
   final double percent;
   final Color fillColor;
   final Color lineColor;
@@ -35,7 +34,7 @@ class RadialPercentWidget extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(11.0),
-          child: Center(child: child),
+          child: FittedBox(child: Center(child: Text(child, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900),))),
         ),
       ],
     );
