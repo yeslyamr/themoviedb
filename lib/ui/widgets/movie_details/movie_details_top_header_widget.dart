@@ -28,44 +28,34 @@ class TopHeaderWidget extends StatelessWidget {
           );
     final poster = posterPath != null
         ? Image.network(
-          ApiClient.imageUrlW500(posterPath),
-          fit: BoxFit.cover,
-        )
+            ApiClient.imageUrlW500(posterPath),
+            fit: BoxFit.cover,
+          )
         : const SizedBox.shrink();
+    final backdropSize =
+        MediaQuery.of(context).orientation == Orientation.portrait ? 250 : 320;
 
     return Column(
       children: [
         SizedBox(
-          height: 330,
+          height: backdropSize + 80,
           child: Stack(
             children: [
               SizedBox(
                 child: backdrop,
-                height: 250,
+                height: backdropSize.toDouble(),
               ),
-              Positioned(left: 25, child: poster, height: 160, top: 250 - 80),
-              const Positioned(
-                child: _TitleAndReleaseDateWidget(),
-                top: 250,
+              Positioned(left: 25, child: poster, height: 160, top: backdropSize - 80),
+              Positioned(
+                child: const _TitleAndReleaseDateWidget(),
+                top: backdropSize.toDouble(),
                 left: 25 + 0.67 * 160,
               ),
             ],
           ),
         ),
         const SizedBox(height: 10),
-        // Container(
-        //   width: double.infinity,
-        //   height: 0.5,
-        //   color: Colors.white,
-        // ),
-        // const SizedBox(height: 10),
         const SizedBox(height: 60, child: _ScoreAndTrailerWidget()),
-        // const SizedBox(height: 10),
-        // Container(
-        //   width: double.infinity,
-        //   height: 0.5,
-        //   color: Colors.white,
-        // ),
       ],
     );
   }
@@ -134,6 +124,7 @@ class _ScoreAndTrailerWidget extends StatelessWidget {
       children: [
         Expanded(
           child: TextButton(
+              // TODO: implement 'add score'
               onPressed: () {}, // child: Text('d')
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -34,7 +34,13 @@ class RadialPercentWidget extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(11.0),
-          child: FittedBox(child: Center(child: Text(child, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900),))),
+          child: FittedBox(
+              child: Center(
+                  child: Text(
+            child,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w900),
+          ))),
         ),
       ],
     );

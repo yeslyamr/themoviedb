@@ -147,6 +147,7 @@ class ApiClient {
       return response;
     };
     final result = _get<MovieDetails>(path: path, parser: parser, parameters: {
+      'append_to_response': 'credits',
       'api_key': _apiKey,
       'language': locale,
     });

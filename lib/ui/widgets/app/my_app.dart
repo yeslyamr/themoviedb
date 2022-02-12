@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.main,
         ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
             backgroundColor: AppColors.main,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.blueGrey),
+            selectedItemColor: AppColors.a,
+            unselectedItemColor: Colors.grey.shade600),
       ),
       initialRoute: mainNavigation.initialRoute(model.isAuth),
       routes: mainNavigation.routes,
@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('ru', 'RU'), // Русский блять
-        Locale('en', 'US'), // english mazafaka do u spik it
+        Locale('ru', 'RU'),  
+        Locale('en', 'US'), 
       ],
       onGenerateRoute: mainNavigation.onGenerateRoute,
     );

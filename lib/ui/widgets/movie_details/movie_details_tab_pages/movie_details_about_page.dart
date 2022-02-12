@@ -13,26 +13,29 @@ class MovieDetailsAboutPage extends StatelessWidget {
     final movieDetails =
         NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
 
-    return ColoredBox(
-      color: AppColors.secondary,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _OverviewWidget(movieDetails: movieDetails),
-          _GenresWidget(movieDetails: movieDetails),
-          // const _CrewWidget(),
-          _InfoWidget(movieDetails: movieDetails),
-          // media
-          // trailers
-          //belongs to collection
-          Container(
-            color: Colors.red ,
-            height: 400, 
-            width: 50,
-          )
-        ],
+    return SliverList(
+        delegate: SliverChildListDelegate([
+      ColoredBox(
+        color: AppColors.secondary,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _OverviewWidget(movieDetails: movieDetails),
+            _GenresWidget(movieDetails: movieDetails),
+            // const _CrewWidget(),
+            _InfoWidget(movieDetails: movieDetails),
+            // media
+            // trailers
+            //belongs to collection
+            Container(
+              color: Colors.red,
+              height: 400,
+              width: 50,
+            )
+          ],
+        ),
       ),
-    );
+    ]));
   }
 }
 
@@ -46,10 +49,12 @@ class _InfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const leftTextStyle =
-        TextStyle(color: AppColors.secondaryText, fontWeight: FontWeight.w500, fontSize: 15);
-    const rightTextStyle =
-        TextStyle(color: AppColors.mainText, fontWeight: FontWeight.w500, fontSize: 15);
+    const leftTextStyle = TextStyle(
+        color: AppColors.secondaryText,
+        fontWeight: FontWeight.w500,
+        fontSize: 15);
+    const rightTextStyle = TextStyle(
+        color: AppColors.mainText, fontWeight: FontWeight.w500, fontSize: 15);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
@@ -126,22 +131,20 @@ class _InfoWidget extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              const Expanded(
-                  child: Text('Budget', style: leftTextStyle)),
+              const Expanded(child: Text('Budget', style: leftTextStyle)),
               Expanded(
                   //TODO: format budget
-                  child: Text( movieDetails?.budget.toString() ?? '',
+                  child: Text(movieDetails?.budget.toString() ?? '',
                       style: rightTextStyle)),
             ],
           ),
-           const SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
-              const Expanded(
-                  child: Text('Revenue', style: leftTextStyle)),
+              const Expanded(child: Text('Revenue', style: leftTextStyle)),
               Expanded(
                   //TODO: format revenue
-                  child: Text( movieDetails?.revenue.toString() ?? '',
+                  child: Text(movieDetails?.revenue.toString() ?? '',
                       style: rightTextStyle)),
             ],
           ),

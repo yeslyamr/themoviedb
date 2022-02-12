@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
 import 'package:themoviedb/domain/api_client/api_client.dart';
+import 'package:themoviedb/ui/theme/app_colors.dart';
 import 'package:themoviedb/ui/widgets/movie_list/movie_list_model.dart';
 
 class MovieListWidget extends StatelessWidget {
@@ -8,8 +9,13 @@ class MovieListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     final model = NotifierProvider.watch<MovieListModel>(context);
     if (model == null) return const SizedBox.shrink();
+
+
 
     return Stack(children: [
       ListView.builder(
@@ -28,7 +34,7 @@ class MovieListWidget extends StatelessWidget {
                 Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.secondary,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -36,12 +42,11 @@ class MovieListWidget extends StatelessWidget {
                           offset: const Offset(1, 2),
                         )
                       ],
-                      border: Border.all(color: Colors.black.withOpacity(0.2)),
+                      border: Border.all(color: AppColors.main.withOpacity(0.2)),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10))),
                   child: Row(
                     children: [
-                      // Image(image: AssetImage(model.movies[index].)),
                       posterPath != null
                           ? Image.network(ApiClient.imageUrlW500(posterPath),
                               width: 95)
@@ -55,7 +60,7 @@ class MovieListWidget extends StatelessWidget {
                               Text(
                                 movie.title,
                                 style: const TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
+                                    fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.mainText),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -65,7 +70,7 @@ class MovieListWidget extends StatelessWidget {
                                 style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w300,
-                                    color: Colors.grey),
+                                    color: AppColors.secondaryText),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -73,7 +78,7 @@ class MovieListWidget extends StatelessWidget {
                               Text(
                                 movie.overview,
                                 style: const TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w300),
+                                    fontSize: 15, fontWeight: FontWeight.w300, color: AppColors.mainText),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -97,7 +102,7 @@ class MovieListWidget extends StatelessWidget {
         },
       ),
       ColoredBox(
-        color: Colors.white,
+        color: AppColors.main,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
           child: TextField(
@@ -113,8 +118,9 @@ class MovieListWidget extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
                 filled: true,
-                fillColor: Colors.white,
-                hintText: "search"),
+                fillColor: AppColors.secondary,
+                hintText: "search",
+                hintStyle: TextStyle(color: AppColors.secondaryText)),
           ),
         ),
       ),

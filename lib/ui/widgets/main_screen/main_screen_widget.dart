@@ -15,7 +15,7 @@ class MainScreenWidget extends StatefulWidget {
 class _MainScreenWidgetState extends State<MainScreenWidget> {
   final movieListModel = MovieListModel();
 
-  int _selectedPage = 0;
+  int _selectedPage = 1;
 
   void onSelectedPage(int index) {
     if (index == _selectedPage) return;
@@ -33,9 +33,11 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   Widget build(BuildContext context) {
     // final model = NotifierProvider.read<MainScreenModel>(context);
-    
+
     return Scaffold(
+      backgroundColor: AppColors.main,
       appBar: AppBar(
+        
         actions: [
           IconButton(
             onPressed: () => SessionDataProvidr().setSessionId(null),
@@ -45,31 +47,36 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             onPressed: () {},
             icon: const Icon(
               Icons.search,
-              color: Colors.lightBlue,
+              color: AppColors.a,
             ),
           ),
         ],
         title: const Text("TMDB"),
       ),
       body: IndexedStack(index: _selectedPage, children: [
-        const Center(child: Text("home")),
+        const Center(child: Text("home" , style: TextStyle(color: Colors.white),)),
         NotifierProvider(
             create: () => movieListModel,
             isManagingModel: false,
-            child: const MovieListWidget()),
-        const Text('Search'),
+          child: const MovieListWidget()),
+        const Center(child: Text('search' )),
         const Text("profile"),
       ]),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: AppColors.main,
-        currentIndex: _selectedPage,
-        onTap: onSelectedPage,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Main"),
-          BottomNavigationBarItem(icon: Icon(Icons.movie), label: "Media"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
-        ],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: AppColors.main
+        ),
+        child: BottomNavigationBar(
+          
+          currentIndex: _selectedPage,
+          onTap: onSelectedPage,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.movie), label: "Media"),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
+          ],
+        ),
       ),
     );
   }
