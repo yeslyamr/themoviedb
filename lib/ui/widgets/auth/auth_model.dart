@@ -5,7 +5,7 @@ import 'package:themoviedb/ui/navigation/main_navigation.dart';
 
 class AuthModel extends ChangeNotifier {
   final _apiClient = ApiClient();
-  final sessionDataProvider = SessionDataProvidr();
+  final sessionDataProvider = SessionDataProvider();
 
   final loginTextController = TextEditingController(text: 'yeslyamr');
   final passwordTextController = TextEditingController(text: 'adidas1nike1');

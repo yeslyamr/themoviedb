@@ -32,7 +32,6 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // final model = NotifierProvider.read<MainScreenModel>(context);
 
     return Scaffold(
       backgroundColor: AppColors.main,
@@ -40,7 +39,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         
         actions: [
           IconButton(
-            onPressed: () => SessionDataProvidr().setSessionId(null),
+            onPressed: () => SessionDataProvider().setSessionId(null),
             icon: const Icon(Icons.logout),
           ),
           IconButton(
@@ -59,8 +58,8 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             create: () => movieListModel,
             isManagingModel: false,
           child: const MovieListWidget()),
-        const Center(child: Text('search' )),
-        const Text("profile"),
+        const Center(child: Text("search" , style: TextStyle(color: Colors.white),)),
+        const Center(child: Text("profile" , style: TextStyle(color: Colors.white),)),
       ]),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(

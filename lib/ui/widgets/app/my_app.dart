@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:themoviedb/ui/navigation/main_navigation.dart';
 import 'package:themoviedb/ui/theme/app_colors.dart';
-import 'package:themoviedb/ui/widgets/app/my_app_model.dart';
 
 class MyApp extends StatelessWidget {
-  final MyAppModel model;
+  // final MyAppModel model;
   static final mainNavigation = MainNavigation();
-  const MyApp({Key? key, required this.model}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
             selectedItemColor: AppColors.a,
             unselectedItemColor: Colors.grey.shade600),
       ),
-      initialRoute: mainNavigation.initialRoute(model.isAuth),
+      initialRoute: MainNavigationRouteNames.loaderWidget,
       routes: mainNavigation.routes,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

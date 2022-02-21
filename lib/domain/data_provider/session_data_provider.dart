@@ -4,7 +4,7 @@ abstract class _Keys {
   static const sessionId = 'session_id';
 }
 
-class SessionDataProvidr {
+class SessionDataProvider {
   static const _secureStorage = FlutterSecureStorage();
 
   Future<String?> getSessionId() => _secureStorage.read(key: _Keys.sessionId);

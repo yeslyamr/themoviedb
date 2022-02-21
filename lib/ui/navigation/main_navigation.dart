@@ -2,23 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
 import 'package:themoviedb/ui/widgets/auth/auth_model.dart';
 import 'package:themoviedb/ui/widgets/auth/auth_widget.dart';
+import 'package:themoviedb/ui/widgets/loader_screen/loader_widget.dart';
 import 'package:themoviedb/ui/widgets/main_screen/main_screen_model.dart';
 import 'package:themoviedb/ui/widgets/main_screen/main_screen_widget.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_widget.dart';
 
 abstract class MainNavigationRouteNames {
-  static const auth = 'auth';
-  static const mainScreen = 'main_screen';
-  static const movieDetails = 'main_screen/movie_details';
+  static const loaderWidget= '/';
+  static const auth = '/auth';
+  static const mainScreen = '/main_screen';
+  static const movieDetails = '/main_screen/movie_details';
+
 }
 
 class MainNavigation {
-  String initialRoute(bool isAuth) => isAuth
-      ? MainNavigationRouteNames.mainScreen
-      : MainNavigationRouteNames.auth;
 
   final routes = <String, Widget Function(BuildContext)>{
+    MainNavigationRouteNames.loaderWidget: (context ) => LoaderWidget.create(),
     MainNavigationRouteNames.mainScreen: (context) => NotifierProvider(
           create: () => MainScreenModel(),
           child: const MainScreenWidget(),

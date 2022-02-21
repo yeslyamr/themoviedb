@@ -1,36 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
-import 'package:themoviedb/ui/Theme/app_button_style.dart';
+import 'package:themoviedb/resources/resources.dart';
+import 'package:themoviedb/ui/theme/app_colors.dart';
 import 'package:themoviedb/ui/widgets/auth/auth_model.dart';
 
-class AuthWidget extends StatefulWidget {
+import '../components/text_field_container.dart';
+
+class AuthWidget extends StatelessWidget {
   const AuthWidget({Key? key}) : super(key: key);
 
   @override
-  _AuthWidgetState createState() => _AuthWidgetState();
-}
-
-class _AuthWidgetState extends State<AuthWidget> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.secondary,
       appBar: AppBar(
-        title: const Text(""),
+        title: const Text("LOGIN"),
+        centerTitle: true,
       ),
-      body: ListView(
-        children: const [
-          _HeaderWidget(),
-          SizedBox(
-            width: double.infinity,
-            height: 16,
-          ),
-          _FormWidget(),
-          SizedBox(
-            width: double.infinity,
-            height: 20,
-          ),
-        ],
-      ),
+      body: const _FormWidget(),
     );
   }
 }
@@ -40,79 +28,117 @@ class _FormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const textFieldDecoration = InputDecoration(
-      border: OutlineInputBorder(),
-      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      isCollapsed: true,
-    );
+    Size size = MediaQuery.of(context).size;
 
     final model = NotifierProvider.read<AuthModel>(context);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const _ErrorMessageWidget(),
-          const SizedBox(
-            width: double.infinity,
-            height: 16,
-          ),
-          const Text(
-            "Username",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          TextField(
-            keyboardType: TextInputType.visiblePassword,
-            controller: model?.loginTextController,
-            decoration: textFieldDecoration,
-          ),
-          const SizedBox(
-            width: double.infinity,
-            height: 16,
-          ),
-          const Text(
-            "Password",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          TextField(
-            controller: model?.passwordTextController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              isDense: true,
-            ),
-            obscureText: true,
-          ),
-          const SizedBox(
-            width: double.infinity,
-            height: 30,
-          ),
-          Row(
-            children: [
-              const _AuthButtonWidget(),
-              const SizedBox(
-                width: 10,
-                height: 5,
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: size.height * 0.02),
+            Padding(
+              // TODO: configure svg 
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: SvgPicture.asset(
+                AppImages.tmdbPrimaryShortLogo,
+                height: size.height * 0.35,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text("Reset password"),
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(1, 180, 228, 1)),
-                  ),
-                ),
-              )
-            ],
+            ),
+            _UsernameTextField(
+              model: model,
+            ),
+            _PasswordTextField(
+              model: model,
+            ),
+            const _AuthButtonWidget(),
+            SizedBox(height: size.height * 0.03),
+            // TODO:  AlreadyHaveAnAccountCheck(
+            //   press: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) {
+            //           return SignUpScreen();
+            //         },
+            //       ),
+            //     );
+            //   },
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PasswordTextField extends StatelessWidget {
+  const _PasswordTextField({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  final AuthModel? model;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      backgroundColor: AppColors.main,
+      child: TextField(
+        style: const TextStyle(color: AppColors.mainText),
+
+        controller: model?.passwordTextController,
+        obscureText: true,
+
+        // onChanged: onChanged,
+        cursorColor: AppColors.a,
+        decoration: InputDecoration(
+          // fillColor: AppColors.mainText,
+          // contentPadding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          hintText: "Password",
+          icon: const Icon(
+            Icons.lock,
+            color: AppColors.a,
           ),
-        ],
+          suffixIcon: IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.visibility,
+              color: AppColors.a,
+            ),
+          ),
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}
+
+class _UsernameTextField extends StatelessWidget {
+  const _UsernameTextField({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  final AuthModel? model;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      backgroundColor: AppColors.main,
+      child: TextField(
+        style: const TextStyle(color: AppColors.mainText),
+        controller: model?.loginTextController,
+        // onChanged: onChanged,
+        cursorColor: AppColors.a,
+        decoration: const InputDecoration(
+          icon: Icon(
+            Icons.person,
+            color: AppColors.a,
+          ),
+          hintText: 'Username',
+          border: InputBorder.none,
+        ),
       ),
     );
   }
@@ -139,271 +165,25 @@ class _AuthButtonWidget extends StatelessWidget {
             "Login",
             style: TextStyle(fontWeight: FontWeight.bold),
           );
-
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: child,
-      style: ButtonStyle(
-          foregroundColor:
-              MaterialStateProperty.all(const Color.fromRGBO(255, 255, 255, 1)),
-          backgroundColor:
-              MaterialStateProperty.all(const Color.fromRGBO(1, 180, 228, 1))),
-    );
-  }
-}
-
-class _ErrorMessageWidget extends StatelessWidget {
-  const _ErrorMessageWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final errorMessage =
-        NotifierProvider.watch<AuthModel>(context)?.errorMessage;
-    if (errorMessage == null) return const SizedBox.shrink();
+    Size size = MediaQuery.of(context).size;
 
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      color: const Color.fromRGBO(0, 180, 228, 1),
-      child: Column(
-        children: [
-          const Text(
-            "Invalid Session",
-            style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          Text(
-            errorMessage,
-            style: const TextStyle(
-                fontSize: 20.8,
-                fontWeight: FontWeight.w500,
-                color: Colors.white),
-          )
-        ],
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      width: size.width * 0.8,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(29),
+        child: ElevatedButton(
+          child: child,
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+              primary: AppColors.a,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              textStyle: const TextStyle(
+                  color: AppColors.mainText,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500)),
+        ),
       ),
     );
   }
 }
-
-class _HeaderWidget extends StatelessWidget {
-  const _HeaderWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            width: double.infinity,
-            height: 20,
-          ),
-          const Text(
-            "Войти в свою учётную запись",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            width: double.infinity,
-            height: 4,
-          ),
-          const Text(
-            "Чтобы пользоваться правкой и возможностями рейтинга TMDB, а также получить персональные рекомендации, необходимо войти в свою учётную запись. Если у вас нет учётной записи, её регистрация является бесплатной и простой. ",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          TextButton(
-              onPressed: () {},
-              child: const Text(
-                "Регистрация",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              style: AppButtonStyle.linkButton),
-          const SizedBox(
-            width: double.infinity,
-            height: 20,
-          ),
-          const Text(
-            "Если Вы зарегистрировались, но не получили письмо для подтверждения, ",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          TextButton(
-              onPressed: () {},
-              child: const Text(
-                "Получить письмо для подтверждения",
-                style: TextStyle(fontSize: 16),
-              ),
-              style: AppButtonStyle.linkButton),
-        ],
-      ),
-    );
-  }
-}
-
-// class _FooterWidget extends StatelessWidget {
-//   const _FooterWidget({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-//       color: const Color.fromRGBO(3, 37, 65, 1),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Container(
-//             alignment: Alignment.centerLeft,
-//             child: ElevatedButton(
-//               onPressed: () {},
-//               child: const Text("ВСТУПИТЬ В СООБЩЕСТВО"),
-//               style: ButtonStyle(
-//                 textStyle: MaterialStateProperty.all(
-//                   const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
-//                 ),
-//                 backgroundColor: MaterialStateProperty.all(Colors.white),
-//                 foregroundColor: MaterialStateProperty.all(
-//                     const Color.fromRGBO(34, 94, 167, 1)),
-//               ),
-//             ),
-//           ),
-//           const SizedBox(height: 50),
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("ГЛАВНОЕ",
-//                       style:
-//                           TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("O TMDB", style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Связаться с нами",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Форумы поддержки",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("API", style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Статус системы",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//             ],
-//           ),
-//           const SizedBox(
-//             height: 40,
-//           ),
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("УЧАСТВУЙТЕ",
-//                       style:
-//                           TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Писание об участии",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Сторонние приложения",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Добавить новый фильм",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Добавить новый сериал",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//             ],
-//           ),
-//           const SizedBox(
-//             height: 40,
-//           ),
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("СООБЩЕСТВО",
-//                       style:
-//                           TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child:
-//                       const Text("Руководства", style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child:
-//                       const Text("Обсуждения", style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Доска почёта",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Twitter", style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//             ],
-//           ),
-//           const SizedBox(
-//             height: 40,
-//           ),
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("О ПРАВЕ",
-//                       style:
-//                           TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Условия использовния",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("API Правила использовния",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//               TextButton(
-//                   onPressed: () {},
-//                   child: const Text("Политика конфиденциальности",
-//                       style: TextStyle(fontSize: 16)),
-//                   style: AppButtonStyle.footerLinkButtonStyle),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

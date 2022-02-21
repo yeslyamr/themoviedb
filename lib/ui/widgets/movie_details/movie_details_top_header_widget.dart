@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../Library/Widgets/Inherited/provider.dart';
 import '../../../domain/api_client/api_client.dart';
 import '../../theme/app_colors.dart';
-import '../film_screen_page/radial_percentage_widget.dart';
+import '../components/radial_percentage_widget.dart';
 import 'movie_details_model.dart';
 
 class TopHeaderWidget extends StatelessWidget {

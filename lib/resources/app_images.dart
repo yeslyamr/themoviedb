@@ -12,6 +12,8 @@ class AppImages {
   static const String profilePlaceholderMale = 'assets/images/profilePicMale.jpg';
   static const String profilePlaceholderFemale = 'assets/images/profilePicFemale.jpg';
   static const String profilePlaceholderNotSpecified = 'assets/images/profilePicNonBinary.jpg';
+  static const String tmdbPrimaryShortLogo = 'assets/images/tmdb_primary_short_logo.svg';
+
 
 
 }
