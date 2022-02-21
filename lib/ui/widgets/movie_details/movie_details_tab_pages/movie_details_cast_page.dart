@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
-import 'package:themoviedb/domain/api_client/api_client.dart';
+import 'package:themoviedb/domain/api_client/image_downloader.dart';
 import 'package:themoviedb/resources/resources.dart';
 import 'package:themoviedb/ui/theme/app_colors.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
@@ -60,7 +60,7 @@ class _ActorsListWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(35.0),
                 child: profilePath != null
                     ? Image.network(
-                        ApiClient.imageUrlW500(profilePath),
+                        ImageDownloader.imageUrlW500(profilePath),
                         fit: BoxFit.cover,
                         height: 70,
                         width: 70,

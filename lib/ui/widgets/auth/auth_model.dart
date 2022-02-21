@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:themoviedb/domain/api_client/api_client.dart';
+import 'package:themoviedb/domain/api_client/movies_api_client.dart';
+import 'package:themoviedb/domain/api_client/auth_api_client.dart';
 import 'package:themoviedb/domain/data_provider/session_data_provider.dart';
 import 'package:themoviedb/ui/navigation/main_navigation.dart';
 
+import '../../../domain/api_client/api_client_exception.dart';
+
 class AuthModel extends ChangeNotifier {
-  final _apiClient = ApiClient();
+  final _authApiClient = AuthApiClient();
   final sessionDataProvider = SessionDataProvider();
 
   final loginTextController = TextEditingController(text: 'yeslyamr');
@@ -32,7 +35,7 @@ class AuthModel extends ChangeNotifier {
     notifyListeners();
     String? sessionId;
     try {
-      sessionId = await _apiClient.auth(username: username, password: password);
+      sessionId = await _authApiClient.auth(username: username, password: password);
     } on ApiClientException catch (e) {
       switch (e.type) {
         case ApiClientExceptionType.network:

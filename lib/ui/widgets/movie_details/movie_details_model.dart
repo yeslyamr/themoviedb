@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:themoviedb/domain/api_client/api_client.dart';
+import 'package:themoviedb/domain/api_client/movies_api_client.dart';
 import 'package:themoviedb/domain/entity/movie_details.dart';
 
 class MovieDetailsModel extends ChangeNotifier {
-  final _apiClient = ApiClient();
+  final _moviesApiClient = MoviesApiClient();
 
   final int movieId;
   MovieDetails? _movieDetails;
@@ -23,7 +23,7 @@ class MovieDetailsModel extends ChangeNotifier {
   }
 
   Future<void> loadDetails() async {
-    _movieDetails = await _apiClient.movieDetails(movieId, _locale);
+    _movieDetails = await _moviesApiClient.movieDetails(movieId, _locale);
     notifyListeners();
   }
 }

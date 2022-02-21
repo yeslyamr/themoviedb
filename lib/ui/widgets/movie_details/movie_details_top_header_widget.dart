@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:themoviedb/domain/api_client/image_downloader.dart';
 import '../../../Library/Widgets/Inherited/provider.dart';
-import '../../../domain/api_client/api_client.dart';
 import '../../theme/app_colors.dart';
 import '../components/radial_percentage_widget.dart';
 import 'movie_details_model.dart';
@@ -17,7 +16,7 @@ class TopHeaderWidget extends StatelessWidget {
     final posterPath = movieDetails?.posterPath;
     final backdrop = backdropPath != null
         ? Image.network(
-            ApiClient.imageUrlOrig(backdropPath),
+            ImageDownloader.imageUrlOrig(backdropPath),
             fit: BoxFit.cover,
             width: double.infinity,
             // height: 250,
@@ -28,7 +27,7 @@ class TopHeaderWidget extends StatelessWidget {
           );
     final poster = posterPath != null
         ? Image.network(
-            ApiClient.imageUrlW500(posterPath),
+            ImageDownloader.imageUrlW500(posterPath),
             fit: BoxFit.cover,
           )
         : const SizedBox.shrink();
