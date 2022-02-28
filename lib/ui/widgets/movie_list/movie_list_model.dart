@@ -1,17 +1,19 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:themoviedb/domain/api_client/movies_api_client.dart';
 import 'package:themoviedb/domain/api_client/search_api_client.dart';
 import 'package:themoviedb/domain/entity/movie.dart';
-import 'package:themoviedb/domain/entity/popular_movie_response.dart';
+import 'package:themoviedb/domain/entity/movie_response.dart';
 import 'package:themoviedb/ui/navigation/main_navigation.dart';
+import 'package:tuple/tuple.dart';
 
-class MovieListModel extends ChangeNotifier {
+class MovieListViewModel extends ChangeNotifier {
   final _moviesApiClient = MoviesApiClient();
   final _searchApiClient = SearchApiClient();
   final _movies = <Movie>[];
+
+  MovieListViewModel({required this.category});
   List<Movie> get movies => List.unmodifiable(_movies);
 
   late String _locale = '';
@@ -21,6 +23,7 @@ class MovieListModel extends ChangeNotifier {
   late DateFormat _dateFormat;
   String? _searchQuery;
   Timer? searchDebounce;
+  final Tuple2 category;
 
   String stringFromDate(DateTime? date) =>
       date != null ? _dateFormat.format(date) : '';
@@ -40,10 +43,11 @@ class MovieListModel extends ChangeNotifier {
     await _loadNextPage();
   }
 
-  Future<PopularMovieResponse> _loadMovies(int nextPage, String locale) async {
+  Future<MovieResponse> _loadMovies(int nextPage, String locale) async {
     final query = _searchQuery;
     if (query == null) {
-      return await _moviesApiClient.popularMovies(nextPage, _locale);
+      return await _moviesApiClient.loadMoviesList(nextPage, _locale,
+          category: category.item2);
     } else {
       return await _searchApiClient.searchMovie(nextPage, _locale, query);
     }

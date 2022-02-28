@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:themoviedb/resources/resources.dart';
 import 'package:themoviedb/ui/theme/app_colors.dart';
 import 'package:themoviedb/ui/widgets/auth/auth_model.dart';
@@ -29,8 +29,8 @@ class _FormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    final model = NotifierProvider.read<AuthModel>(context);
+  
+    final model = context.read<AuthModel>();
     return SingleChildScrollView(
       child: Center(
         child: Column(
@@ -38,7 +38,7 @@ class _FormWidget extends StatelessWidget {
           children: <Widget>[
             SizedBox(height: size.height * 0.02),
             Padding(
-              // TODO: configure svg 
+              // TODO: configure svg
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: SvgPicture.asset(
                 AppImages.tmdbPrimaryShortLogo,
@@ -151,10 +151,10 @@ class _AuthButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.watch<AuthModel>(context);
+    final model = context.watch<AuthModel>();
     final onPressed =
-        model?.canStartAuth == true ? () => model?.auth(context) : () {};
-    final child = model?.isAuthProgress == true
+        model.canStartAuth == true ? () => model.auth(context) : () {};
+    final child = model.isAuthProgress == true
         ? const SizedBox(
             height: 15,
             width: 15,

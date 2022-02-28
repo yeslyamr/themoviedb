@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:themoviedb/domain/services/auth_service.dart';
 import 'package:themoviedb/ui/navigation/main_navigation.dart';
 
-
 class LoaderViewModel {
   final BuildContext context;
   final _authService = AuthService();

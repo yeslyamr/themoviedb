@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:themoviedb/domain/api_client/image_downloader.dart';
 import 'package:themoviedb/resources/resources.dart';
 import 'package:themoviedb/ui/theme/app_colors.dart';
@@ -21,8 +21,9 @@ class _ActorsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cast = NotifierProvider.watch<MovieDetailsModel>(context)
-        ?.movieDetails
+    
+    final cast = context.watch<MovieDetailsModel>()
+        .movieDetails
         ?.credits
         .cast;
 

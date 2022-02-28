@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  // static const mainDarkBlue = Color.fromRGBO(3, 37, 63, 1); // themoviedb main color 
+  // static const mainDarkBlue = Color.fromRGBO(3, 37, 63, 1); // themoviedb main color
   // static const secondaryColor = Color.fromRGBO(21, 60, 102, 1);
 
   static const a = Color.fromRGBO(89, 193, 184, 1);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:themoviedb/domain/api_client/image_downloader.dart';
-import '../../../Library/Widgets/Inherited/provider.dart';
+
 import '../../theme/app_colors.dart';
 import '../components/radial_percentage_widget.dart';
 import 'movie_details_model.dart';
@@ -10,8 +11,9 @@ class TopHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final movieDetails =
-        NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
+    
+    final movieDetails = 
+        context.watch<MovieDetailsModel>().movieDetails;
     final backdropPath = movieDetails?.backdropPath;
     final posterPath = movieDetails?.posterPath;
     final backdrop = backdropPath != null
@@ -44,7 +46,8 @@ class TopHeaderWidget extends StatelessWidget {
                 child: backdrop,
                 height: backdropSize.toDouble(),
               ),
-              Positioned(left: 25, child: poster, height: 160, top: backdropSize - 80),
+              Positioned(
+                  left: 25, child: poster, height: 160, top: backdropSize - 80),
               Positioned(
                 child: const _TitleAndReleaseDateWidget(),
                 top: backdropSize.toDouble(),
@@ -65,8 +68,8 @@ class _TitleAndReleaseDateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final movieDetails =
-        NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
+   final movieDetails = 
+        context.watch<MovieDetailsModel>().movieDetails;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,8 +103,8 @@ class _ScoreAndTrailerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final movieDetails =
-        NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
+    final movieDetails = 
+        context.watch<MovieDetailsModel>().movieDetails;
     var score = movieDetails?.voteAverage;
 
     Color lineColor = const Color.fromRGBO(33, 208, 122, 1);

@@ -1,25 +1,24 @@
+import 'package:themoviedb/domain/entity/tv_shows_response.dart';
+
 import '../../configuration/configuration.dart';
-import '../entity/movie_response.dart';
 import 'network_client.dart';
 
-class SearchApiClient {
+class TvShowsApiClient {
   final _networkClient = NetworkClient();
 
-  Future<MovieResponse> searchMovie(
-      int page, String locale, String query) async {
+  Future<TvShowsResponse> loadTvShowsList(int page, String locale,
+      {required String category}) async {
     return _networkClient.get(
-        path: '/search/movie',
+        path: category,
         parser: (dynamic json) {
           final jsonMap = json as Map<String, dynamic>;
-          final response = MovieResponse.fromJson(jsonMap);
+          final response = TvShowsResponse.fromJson(jsonMap);
           return response;
         },
         parameters: {
           'api_key': Configuration.apiKey,
           'page': page.toString(),
           'language': locale,
-          'query': query,
-          'include_adult': true.toString(),
         });
   }
 }

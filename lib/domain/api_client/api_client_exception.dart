@@ -1,4 +1,3 @@
-
 enum ApiClientExceptionType { network, auth, other }
 
 class ApiClientException implements Exception {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:themoviedb/ui/theme/app_colors.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
 import 'package:tuple/tuple.dart';
@@ -21,7 +21,8 @@ class _MovieDetailsWidgetState extends State<MovieDetailsWidget>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    NotifierProvider.read<MovieDetailsModel>(context)?.setupLocale(context);
+    
+    context.read<MovieDetailsModel>().setupLocale(context);
   }
 
   //TODO: tab controller for each page??
@@ -36,8 +37,8 @@ class _MovieDetailsWidgetState extends State<MovieDetailsWidget>
 
   @override
   Widget build(BuildContext context) {
-    final movieDetails =
-        NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
+    final movieDetails = 
+        context.watch<MovieDetailsModel>().movieDetails;
     final title = movieDetails?.title;
 
     return DefaultTabController(
@@ -53,29 +54,27 @@ class _MovieDetailsWidgetState extends State<MovieDetailsWidget>
                   title: innerBoxIsScrolled
                       ? Text(title ?? 'title')
                       : const Text(''),
-                  // TODO: make title to appear when scrolled down
                   centerTitle: true,
                   flexibleSpace: const FlexibleSpaceBar(
                     background: SafeArea(child: TopHeaderWidget()),
                     collapseMode: CollapseMode.pin,
                   ),
                   pinned: true,
-                  expandedHeight: MediaQuery.of(context).orientation == Orientation.portrait ? 400 : 470,
+                  bottom: TabBar(
+                    labelColor: AppColors.a,
+                    unselectedLabelColor: AppColors.mainText,
+                    indicatorColor: AppColors.a,
+                    isScrollable: true,
+                    tabs: _pages
+                        .map<Tab>((Tuple2 page) => Tab(text: page.item1))
+                        .toList(),
+                  ),
+                  expandedHeight:
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? 450
+                          : 520,
                 ),
               ),
-              SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverPersistantHeaderDelegateImplementation(
-                      tabBar: TabBar(
-                        labelColor: AppColors.a,
-                        unselectedLabelColor: AppColors.mainText,
-                        indicatorColor: AppColors.a,
-                        isScrollable: true,
-                        tabs: _pages
-                            .map<Tab>((Tuple2 page) => Tab(text: page.item1))
-                            .toList(),
-                      ),
-                      color: AppColors.main))
             ];
           },
           body: TabBarView(
@@ -96,7 +95,7 @@ class _MovieDetailsWidgetState extends State<MovieDetailsWidget>
                         SliverPadding(
                           padding: const EdgeInsets.all(0.0),
                           sliver: page.item2,
-                          ),
+                        ),
                       ],
                     );
                   },

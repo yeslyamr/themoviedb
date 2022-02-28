@@ -1,7 +1,6 @@
 import 'package:themoviedb/configuration/configuration.dart';
 
 class ImageDownloader {
-  
   static String imageUrlW500(String path) => Configuration.imageUrlW500 + path;
 
   static String imageUrlOrig(String path) => Configuration.imageUrlOrig + path;
@@ -19,4 +18,4 @@ class ImageDownloader {
 // | -------- | -------- | -------- |   h632   | -------- |
 // |   w780   |   w780   | -------- | -------- | -------- |
 // | -------- |  w1280   | -------- | -------- | -------- |
-// | original | original | original | original | original |  
+// | original | original | original | original | original |

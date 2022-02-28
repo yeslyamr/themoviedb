@@ -10,7 +10,7 @@ class MovieDetailsModel extends ChangeNotifier {
   MovieDetails? _movieDetails;
   MovieDetails? get movieDetails => _movieDetails;
   String _locale = '';
-  late DateFormat _dateFormat;
+  //  late DateFormat _dateFormat;
 
   MovieDetailsModel({required this.movieId});
 
@@ -18,7 +18,7 @@ class MovieDetailsModel extends ChangeNotifier {
     final locale = Localizations.localeOf(context).toLanguageTag();
     if (_locale == locale) return;
     _locale = locale;
-    _dateFormat = DateFormat.yMMMMd(locale);
+    // _dateFormat = DateFormat.yMMMMd(locale);
     await loadDetails();
   }
 

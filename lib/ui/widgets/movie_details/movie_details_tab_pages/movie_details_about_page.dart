@@ -1,6 +1,6 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:themoviedb/domain/entity/movie_details.dart';
 import 'package:themoviedb/ui/theme/app_colors.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
@@ -11,7 +11,7 @@ class MovieDetailsAboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final movieDetails =
-        NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
+        context.watch<MovieDetailsModel>().movieDetails;
 
     return SliverList(
         delegate: SliverChildListDelegate([

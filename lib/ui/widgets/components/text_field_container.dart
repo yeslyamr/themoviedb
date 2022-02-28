@@ -9,7 +9,7 @@ class TextFieldContainer extends StatelessWidget {
     required this.backgroundColor,
     Key? key,
     required this.child,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
