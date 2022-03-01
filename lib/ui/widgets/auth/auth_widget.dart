@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:themoviedb/resources/resources.dart';
@@ -43,6 +45,7 @@ class _FormWidget extends StatelessWidget {
               child: SvgPicture.asset(
                 AppImages.tmdbPrimaryShortLogo,
                 height: size.height * 0.35,
+                theme: const SvgTheme(currentColor: AppColors.a),
               ),
             ),
             _UsernameTextField(

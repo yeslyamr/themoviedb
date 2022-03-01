@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:themoviedb/domain/data_provider/session_data_provider.dart';
+import 'package:themoviedb/ui/navigation/main_navigation.dart';
 import 'package:themoviedb/ui/theme/app_colors.dart';
 import 'package:themoviedb/ui/widgets/home_screen/home_screen_model.dart';
 
@@ -27,23 +28,10 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.main,
-      appBar: AppBar(actions: [
-        IconButton(
-          onPressed: () => SessionDataProvider().setSessionId(null),
-          icon: const Icon(Icons.logout),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.search,
-            color: AppColors.a,
-          ),
-        ),
-      ], title: const Text("TMDB"), centerTitle: true),
+      appBar: AppBar(title: const Text("TMDB"), centerTitle: true),
       body: IndexedStack(index: _selectedPage, children: [
         ChangeNotifierProvider(
-            create: (_) => HomeScreenModel(),
-            child: const HomeScreenWidget()),
+            create: (_) => HomeScreenModel(), child: const HomeScreenWidget()),
         const Center(
           child: Text(
             "search",
@@ -56,10 +44,18 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        const Center(
-          child: Text(
-            "profile",
-            style: TextStyle(color: Colors.white),
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              SessionDataProvider().setSessionId(null);
+              Navigator.of(context)
+                  .pushReplacementNamed(MainNavigationRouteNames.auth);
+            },
+            style: ButtonStyle( backgroundColor: MaterialStateProperty.all(AppColors.a)),
+            child: const Text(
+              "Logout",
+              style: TextStyle(color: AppColors.main, fontWeight: FontWeight.w700),
+            ),
           ),
         ),
       ]),
